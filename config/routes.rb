@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :seats
   resources :airports
   resources :flights
   mount Rswag::Ui::Engine => '/api-docs'
