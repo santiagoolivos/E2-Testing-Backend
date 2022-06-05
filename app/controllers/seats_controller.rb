@@ -1,14 +1,14 @@
 class SeatsController < ApplicationController
-  before_action :set_seat, only: %i[ show update destroy ]
+  before_action :set_flight, only: %i[index show create update destroy]
+  before_action :set_seat, only: %i[show update destroy]
 
-  # GET /seats
+  # GET /flights/:flight_id/seats
   def index
-    @seats = Seat.all
-
-    render json: @seats
+    render json: { error: 'No se ha encontrado el vuelo' }, status: :not_found if @flight.blank?
+    render json: @flight.seats, status: :ok if @flight.present?
   end
 
-  # GET /seats/1
+  # GET /flights/:flight_id/seats/1
   def show
     render json: @seat
   end
@@ -38,14 +38,22 @@ class SeatsController < ApplicationController
     @seat.destroy
   end
 
-  private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_seat
-      @seat = Seat.find(params[:id])
-    end
+private
+  # Use callbacks to share common setup or constraints between actions.
+  def set_seat
+    @seat = Seat.find(params[:id])
+  end
 
-    # Only allow a list of trusted parameters through.
-    def seat_params
-      params.require(:seat).permit(:user_id, :flight_id, :used, :passenger_name)
+  # Only allow a list of trusted parameters through.
+  def seat_params
+    params.require(:seat).permit(:user_id, :flight_id, :used, :passenger_name, :seat_code)
+  end
+
+  def set_flight
+    begin
+      @flight = Flight.find(params[:flight_id])
+    rescue ActiveRecord::RecordNotFound => e
+      @flight = nil
     end
+  end
 end

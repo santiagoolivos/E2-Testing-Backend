@@ -5,6 +5,7 @@ class CreateSeats < ActiveRecord::Migration[7.0]
       t.integer :flight_id
       t.boolean :used
       t.string :passenger_name
+      t.string :seat_code
 
       t.timestamps
     end

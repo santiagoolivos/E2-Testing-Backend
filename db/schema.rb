@@ -35,6 +35,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_06_04_215931) do
     t.integer "flight_id"
     t.boolean "used"
     t.string "passenger_name"
+    t.string "seat_code"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
