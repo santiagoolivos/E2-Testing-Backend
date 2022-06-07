@@ -5,12 +5,13 @@ class UsersController < ApplicationController
   def index
     @users = User.all
 
-    render json: @users
+    render json: @users, status: :ok
   end
 
   # GET /users/1
   def show
-    render json: @user
+    render json: { error: 'No se ha encontrado el usuario' }, status: :not_found if @user.blank?
+    render json: @user, status: :ok if @user.present?
   end
 
   # POST /users
@@ -26,6 +27,9 @@ class UsersController < ApplicationController
 
   # PATCH/PUT /users/1
   def update
+    render json: { error: 'No se ha encontrado el usuario' }, status: :not_found if @user.blank?
+    return unless @user.present?
+
     if @user.update(user_params)
       render json: @user
     else
@@ -35,17 +39,21 @@ class UsersController < ApplicationController
 
   # DELETE /users/1
   def destroy
-    @user.destroy
+    render json: { error: 'No se ha encontrado el usuario' }, status: :not_found if @user.blank?
+    @user.destroy if @user.present?
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_user
-      @user = User.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def user_params
-      params.require(:user).permit(:name, :lastname, :username, :password_digest, :role)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_user
+    @user = User.find(params[:id])
+  rescue ActiveRecord::RecordNotFound => e
+    @user = nil
+  end
+
+  # Only allow a list of trusted parameters through.
+  def user_params
+    params.require(:user).permit(:name, :lastname, :username, :password_digest, :role)
+  end
 end

@@ -1,16 +1,17 @@
 class AirportsController < ApplicationController
-  before_action :set_airport, only: %i[ show update destroy ]
+  before_action :set_airport, only: %i[show update destroy]
 
   # GET /airports
   def index
-    @airports = Airport.all
-
-    render json: @airports
+    render json: Airport.all, status: :ok
   end
 
   # GET /airports/1
   def show
-    render json: @airport
+    render json: { error: 'No se ha encontrado el aeropuerto' }, status: :not_found if @airport.blank?
+    return unless @airport.present?
+
+    render json: @airport, status: :ok
   end
 
   # POST /airports
@@ -26,6 +27,9 @@ class AirportsController < ApplicationController
 
   # PATCH/PUT /airports/1
   def update
+    render json: { error: 'No se ha encontrado el aeropuerto' }, status: :not_found if @airport.blank?
+    return unless @airport.present?
+
     if @airport.update(airport_params)
       render json: @airport
     else
@@ -35,17 +39,23 @@ class AirportsController < ApplicationController
 
   # DELETE /airports/1
   def destroy
+    render json: { error: 'No se ha encontrado el aeropuerto' }, status: :not_found if @airport.blank?
+    return unless @airport.present?
+
     @airport.destroy
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_airport
-      @airport = Airport.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def airport_params
-      params.require(:airport).permit(:name, :city)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_airport
+    @airport = Airport.find(params[:id])
+  rescue ActiveRecord::RecordNotFound => e
+    @airport = nil
+  end
+
+  # Only allow a list of trusted parameters through.
+  def airport_params
+    params.require(:airport).permit(:name, :city)
+  end
 end

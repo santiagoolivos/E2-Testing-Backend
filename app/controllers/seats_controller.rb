@@ -10,22 +10,35 @@ class SeatsController < ApplicationController
 
   # GET /flights/:flight_id/seats/1
   def show
+    render json: { error: 'No se ha encontrado el vuelo' }, status: :not_found if @flight.blank?
+    return unless @flight.present?
+
+    render json: { error: 'No se ha encontrado el asiento / no pertenece al vuelo' }, status: :not_found if @seat.blank?
+    return unless @seat.present?
+
     render json: @seat
   end
 
   # POST /seats
   def create
+    render json: { error: 'No se ha encontrado el vuelo' }, status: :not_found if @flight.blank?
+    return unless @flight.present?
+
     @seat = Seat.new(seat_params)
 
     if @seat.save
+      @flight.seats << @seat
       render json: @seat, status: :created, location: @seat
     else
       render json: @seat.errors, status: :unprocessable_entity
     end
   end
 
-  # PATCH/PUT /seats/1
+  # PATCH/PUT /flights/:flight_id/seats/1
   def update
+    render json: { error: 'No se ha encontrado el vuelo' }, status: :not_found if @flight.blank?
+    return unless @flight.present?
+
     if @seat.update(seat_params)
       render json: @seat
     else
@@ -33,15 +46,24 @@ class SeatsController < ApplicationController
     end
   end
 
-  # DELETE /seats/1
+  # DELETE /flights/:flight_id/seats/1
   def destroy
+    render json: { error: 'No se ha encontrado el vuelo' }, status: :not_found if @flight.blank?
+    return unless @flight.present?
+
+    render json: { error: 'No se ha encontrado el asiento' }, status: :not_found if @seat.blank?
+    return unless @seat.present?
+
     @seat.destroy
   end
 
-private
+  private
+
   # Use callbacks to share common setup or constraints between actions.
   def set_seat
     @seat = Seat.find(params[:id])
+  rescue ActiveRecord::RecordNotFound => e
+    @seat = nil
   end
 
   # Only allow a list of trusted parameters through.
@@ -50,10 +72,8 @@ private
   end
 
   def set_flight
-    begin
-      @flight = Flight.find(params[:flight_id])
-    rescue ActiveRecord::RecordNotFound => e
-      @flight = nil
-    end
+    @flight = Flight.find(params[:flight_id])
+  rescue ActiveRecord::RecordNotFound => e
+    @flight = nil
   end
 end
