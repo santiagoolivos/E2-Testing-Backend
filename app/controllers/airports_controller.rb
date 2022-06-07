@@ -31,7 +31,7 @@ class AirportsController < ApplicationController
     return unless @airport.present?
 
     if @airport.update(airport_params)
-      render json: @airport
+      render json: @airport, status: :accepted
     else
       render json: @airport.errors, status: :unprocessable_entity
     end

@@ -19,7 +19,7 @@ class SeatsController < ApplicationController
     render json: @seat
   end
 
-  # POST /seats
+  # POST /flights/:flight_id/seats
   def create
     render json: { error: 'No se ha encontrado el vuelo' }, status: :not_found if @flight.blank?
     return unless @flight.present?
@@ -28,7 +28,7 @@ class SeatsController < ApplicationController
 
     if @seat.save
       @flight.seats << @seat
-      render json: @seat, status: :created, location: @seat
+      render json: @seat, status: :created
     else
       render json: @seat.errors, status: :unprocessable_entity
     end

@@ -4,6 +4,231 @@ info:
   title: API V1
   version: v1
 paths:
+  "/airports":
+    get:
+      summary: Obtener los aeropuertos
+      tags:
+      - Endpoints de Aeropuertos
+      responses:
+        '200':
+          description: Retorna el listado de aeropuertos con éxito
+    post:
+      summary: Registrar un aeropuerto
+      tags:
+      - Endpoints de Aeropuertos
+      parameters: []
+      responses:
+        '201':
+          description: Registra un nuevo vuelo con éxito
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                city:
+                  type: string
+                  example: Santiago
+                name:
+                  type: string
+                  example: Arturo Merino Benitez International Airport
+              required:
+              - city
+              - name
+  "/airports/{id}":
+    get:
+      summary: Obtener un aeropuerto
+      tags:
+      - Endpoints de Aeropuertos
+      parameters:
+      - name: id
+        in: path
+        required: true
+      responses:
+        '200':
+          description: Retorna el aeropuerto con éxito
+        '404':
+          description: Aeropuerto no encontrado
+    patch:
+      summary: Modificar un aeropuerto
+      tags:
+      - Endpoints de Aeropuertos
+      parameters:
+      - name: id
+        in: path
+        required: true
+      responses:
+        '202':
+          description: Modifica al aeropuerto con éxito
+        '404':
+          description: Vuelo no encontrado
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                city:
+                  type: string
+                  example: SCL-LIM
+                name:
+                  type: string
+                  example: '2020-01-01'
+  "/flights":
+    get:
+      summary: Obtener los vuelos
+      tags:
+      - Endpoints de Vuelos
+      responses:
+        '200':
+          description: Retorna el listado de vuelos con éxito
+    post:
+      summary: Registrar un vuelo
+      tags:
+      - Endpoints de Vuelos
+      parameters: []
+      responses:
+        '201':
+          description: Registra un nuevo vuelo con éxito
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                code:
+                  type: string
+                  example: SCL-LIM
+                date:
+                  type: string
+                  example: '2020-01-01'
+                arrival_id:
+                  type: string
+                  example: 1
+                departure_id:
+                  type: string
+                  example: 2
+              required:
+              - code
+              - date
+              - arrival_id
+              - departure_id
+  "/flights/{id}":
+    get:
+      summary: Obtener un vuelo
+      tags:
+      - Endpoints de Vuelos
+      parameters:
+      - name: id
+        in: path
+        required: true
+      responses:
+        '200':
+          description: Retorna el vuelo con éxito
+        '404':
+          description: Vuelo no encontrado
+    patch:
+      summary: Modificar un vuelo
+      tags:
+      - Endpoints de Vuelos
+      parameters:
+      - name: id
+        in: path
+        required: true
+      responses:
+        '202':
+          description: Modifica al vuelo con éxito
+        '404':
+          description: Vuelo no encontrado
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                code:
+                  type: string
+                  example: SCL-LIM
+                date:
+                  type: string
+                  example: '2020-01-01'
+                arrival_id:
+                  type: string
+                  example: 1
+                departure_id:
+                  type: string
+                  example: 2
+  "/flights/{flight_id}/seats":
+    get:
+      summary: Obtener los asientos del asiento
+      tags:
+      - Endpoints de Asientos
+      parameters:
+      - name: flight_id
+        in: path
+        required: true
+      responses:
+        '200':
+          description: Retorna el listado de asientos con éxito
+        '404':
+          description: Vuelo no encontrado
+    post:
+      summary: Registrar un asiento
+      tags:
+      - Endpoints de Asientos
+      parameters:
+      - name: flight_id
+        in: path
+        required: true
+      responses:
+        '201':
+          description: Registra un nuevo asiento con éxito
+        '404':
+          description: Vuelo no encontrado
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                user_id:
+                  type: string
+                  example: SCL-LIM
+                flight_id:
+                  type: string
+                  example: '2020-01-01'
+                used:
+                  type: string
+                  example: 1
+                passenger_name:
+                  type: string
+                  example: 2
+                seat_code:
+                  type: strings
+                  example: 2
+              required:
+              - user_id
+              - flight_id
+              - used
+              - passenger_name
+              - seat_code
+  "/flights/{flight_id}/seats/{id}":
+    get:
+      summary: Obtener un asiento del vuelo
+      tags:
+      - Endpoints de Asientos
+      parameters:
+      - name: flight_id
+        in: path
+        required: true
+      - name: id
+        in: path
+        required: true
+      responses:
+        '200':
+          description: Retorna la información del asiento con éxito
+        '404':
+          description: Asiento no encontrado
   "/users":
     get:
       summary: Obtener los usuarios
@@ -96,7 +321,7 @@ paths:
                   type: integer
                   example: 2
 servers:
-- url: https://{defaultHost}
+- url: http://{defaultHost}
   variables:
     defaultHost:
-      default: www.example.com
+      default: localhost:4000/
