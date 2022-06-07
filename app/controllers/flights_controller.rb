@@ -43,7 +43,7 @@ class FlightsController < ApplicationController
     return unless @flight.present?
 
     if @flight.update(flight_params)
-      render json: @flight
+      render json: @flight, status: :accepted
     else
       render json: @flight.errors, status: :unprocessable_entity
     end

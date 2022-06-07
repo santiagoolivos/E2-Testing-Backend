@@ -31,7 +31,7 @@ class UsersController < ApplicationController
     return unless @user.present?
 
     if @user.update(user_params)
-      render json: @user, except: [:password_digest]
+      render json: @user, except: [:password_digest], status: :accepted
     else
       render json: @user.errors, status: :unprocessable_entity
     end
