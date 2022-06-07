@@ -25,8 +25,8 @@ development:
   <<: *default
   database: easy_flight_api_development
   host: localhost
-  username: <%= ENV['PSQL_USER'] %>
-  password: <%= ENV['PSQL_PASSWORD'] %>
+  username: postgres
+  password: tomas221999
 
   # The specified database role being used to connect to postgres.
   # To create additional roles in postgres see `$ createuser --help`.
@@ -62,8 +62,8 @@ test:
   <<: *default
   database: easy_flight_api_test
   host: localhost
-  username: <%= ENV['PSQL_USER'] %>
-  password: <%= ENV['PSQL_PASSWORD'] %>
+  username: postgres
+  password: tomas221999
 
 # As with config/credentials.yml, you never want to store sensitive information,
 # like your database password, in your source code. If your source code is
