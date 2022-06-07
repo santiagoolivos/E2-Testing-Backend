@@ -3,7 +3,98 @@ openapi: 3.0.1
 info:
   title: API V1
   version: v1
-paths: {}
+paths:
+  "/users":
+    get:
+      summary: Obtener los usuarios
+      tags:
+      - Endpoints de Usuarios
+      responses:
+        '200':
+          description: Retorna el listado de usuarios con éxito
+    post:
+      summary: Registrar un usuario
+      tags:
+      - Endpoints de Usuarios
+      parameters: []
+      responses:
+        '201':
+          description: Registra un nuevo usuario con éxito
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: John
+                lastname:
+                  type: string
+                  example: Doe
+                username:
+                  type: string
+                  example: Jonh@uc.cl
+                password_digest:
+                  type: string
+                  example: '123456'
+                role:
+                  type: integer
+                  example: 2
+              required:
+              - name
+              - last_name
+              - username
+              - password_digest
+              - role
+  "/users/{id}":
+    get:
+      summary: Obtener un usuarios
+      tags:
+      - Endpoints de Usuarios
+      parameters:
+      - name: id
+        in: path
+        required: true
+      responses:
+        '200':
+          description: Retorna el usuario con éxito
+        '404':
+          description: Usuario no encontrado
+    patch:
+      summary: Modificar un usuario
+      tags:
+      - Endpoints de Usuarios
+      parameters:
+      - name: id
+        in: path
+        required: true
+      responses:
+        '202':
+          description: Modifica al usuario con éxito
+        '404':
+          description: Usuario no encontrado
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: John2
+                lastname:
+                  type: string
+                  example: Doe2
+                username:
+                  type: string
+                  example: Jonh2@uc.cl
+                password_digest:
+                  type: string
+                  example: '12345622222'
+                role:
+                  type: integer
+                  example: 2
 servers:
 - url: https://{defaultHost}
   variables:

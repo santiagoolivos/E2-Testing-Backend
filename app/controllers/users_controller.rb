@@ -31,7 +31,7 @@ class UsersController < ApplicationController
     return unless @user.present?
 
     if @user.update(user_params)
-      render json: @user
+      render json: @user, status: :accepted
     else
       render json: @user.errors, status: :unprocessable_entity
     end
