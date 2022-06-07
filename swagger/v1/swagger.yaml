@@ -9,17 +9,25 @@ paths:
       summary: Obtener los aeropuertos
       tags:
       - Endpoints de Aeropuertos
+      security:
+      - bearerAuth: []
       responses:
         '200':
           description: Retorna el listado de aeropuertos con éxito
+        '401':
+          description: Error en validación de Token
     post:
       summary: Registrar un aeropuerto
       tags:
       - Endpoints de Aeropuertos
+      security:
+      - bearerAuth: []
       parameters: []
       responses:
         '201':
           description: Registra un nuevo vuelo con éxito
+        '401':
+          description: Error en validación de Token
       requestBody:
         content:
           application/json:
@@ -40,6 +48,8 @@ paths:
       summary: Obtener un aeropuerto
       tags:
       - Endpoints de Aeropuertos
+      security:
+      - bearerAuth: []
       parameters:
       - name: id
         in: path
@@ -49,10 +59,14 @@ paths:
           description: Retorna el aeropuerto con éxito
         '404':
           description: Aeropuerto no encontrado
+        '401':
+          description: Error en validación de Token
     patch:
       summary: Modificar un aeropuerto
       tags:
       - Endpoints de Aeropuertos
+      security:
+      - bearerAuth: []
       parameters:
       - name: id
         in: path
@@ -62,6 +76,8 @@ paths:
           description: Modifica al aeropuerto con éxito
         '404':
           description: Vuelo no encontrado
+        '401':
+          description: Error en validación de Token
       requestBody:
         content:
           application/json:
@@ -74,22 +90,56 @@ paths:
                 name:
                   type: string
                   example: '2020-01-01'
+  "/authenticate":
+    post:
+      summary: Tries to Log In
+      tags:
+      - Authentication Endpoints
+      parameters: []
+      responses:
+        '200':
+          description: Successful log in
+        '401':
+          description: Log in failed
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                username:
+                  type: string
+                  example: balamos@user.cl
+                password:
+                  type: string
+                  example: benja
+              required:
+              - username
+              - password
   "/flights":
     get:
       summary: Obtener los vuelos
       tags:
       - Endpoints de Vuelos
+      security:
+      - bearerAuth: []
       responses:
         '200':
           description: Retorna el listado de vuelos con éxito
+        '401':
+          description: Error en validación de Token
     post:
       summary: Registrar un vuelo
       tags:
       - Endpoints de Vuelos
+      security:
+      - bearerAuth: []
       parameters: []
       responses:
         '201':
           description: Registra un nuevo vuelo con éxito
+        '401':
+          description: Error en validación de Token
       requestBody:
         content:
           application/json:
@@ -118,6 +168,8 @@ paths:
       summary: Obtener un vuelo
       tags:
       - Endpoints de Vuelos
+      security:
+      - bearerAuth: []
       parameters:
       - name: id
         in: path
@@ -127,10 +179,14 @@ paths:
           description: Retorna el vuelo con éxito
         '404':
           description: Vuelo no encontrado
+        '401':
+          description: Error en validación de Token
     patch:
       summary: Modificar un vuelo
       tags:
       - Endpoints de Vuelos
+      security:
+      - bearerAuth: []
       parameters:
       - name: id
         in: path
@@ -140,6 +196,8 @@ paths:
           description: Modifica al vuelo con éxito
         '404':
           description: Vuelo no encontrado
+        '401':
+          description: Error en validación de Token
       requestBody:
         content:
           application/json:
@@ -167,11 +225,15 @@ paths:
       - name: flight_id
         in: path
         required: true
+      security:
+      - bearerAuth: []
       responses:
         '200':
           description: Retorna el listado de asientos con éxito
         '404':
           description: Vuelo no encontrado
+        '401':
+          description: Error en validación de Token
     post:
       summary: Registrar un asiento
       tags:
@@ -180,11 +242,15 @@ paths:
       - name: flight_id
         in: path
         required: true
+      security:
+      - bearerAuth: []
       responses:
         '201':
           description: Registra un nuevo asiento con éxito
         '404':
           description: Vuelo no encontrado
+        '401':
+          description: Error en validación de Token
       requestBody:
         content:
           application/json:
@@ -224,19 +290,27 @@ paths:
       - name: id
         in: path
         required: true
+      security:
+      - bearerAuth: []
       responses:
         '200':
           description: Retorna la información del asiento con éxito
         '404':
           description: Asiento no encontrado
+        '401':
+          description: Error en validación de Token
   "/users":
     get:
       summary: Obtener los usuarios
       tags:
       - Endpoints de Usuarios
+      security:
+      - bearerAuth: []
       responses:
         '200':
           description: Retorna el listado de usuarios con éxito
+        '401':
+          description: Error en validación de Token
     post:
       summary: Registrar un usuario
       tags:
@@ -260,7 +334,7 @@ paths:
                 username:
                   type: string
                   example: Jonh@uc.cl
-                password_digest:
+                password:
                   type: string
                   example: '123456'
                 role:
@@ -270,7 +344,7 @@ paths:
               - name
               - last_name
               - username
-              - password_digest
+              - password
               - role
   "/users/{id}":
     get:
@@ -281,15 +355,21 @@ paths:
       - name: id
         in: path
         required: true
+      security:
+      - bearerAuth: []
       responses:
         '200':
           description: Retorna el usuario con éxito
         '404':
           description: Usuario no encontrado
+        '401':
+          description: Error en validación de Token
     patch:
       summary: Modificar un usuario
       tags:
       - Endpoints de Usuarios
+      security:
+      - bearerAuth: []
       parameters:
       - name: id
         in: path
@@ -299,6 +379,8 @@ paths:
           description: Modifica al usuario con éxito
         '404':
           description: Usuario no encontrado
+        '401':
+          description: Error en validación de Token
       requestBody:
         content:
           application/json:
@@ -314,14 +396,21 @@ paths:
                 username:
                   type: string
                   example: Jonh2@uc.cl
-                password_digest:
+                password:
                   type: string
                   example: '12345622222'
                 role:
                   type: integer
                   example: 2
 servers:
-- url: http://{defaultHost}
+- url: http://{otherHost}
   variables:
-    defaultHost:
-      default: localhost:4000/
+    otherHost:
+      default: 127.0.0.1:3000/
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      name: Authorization

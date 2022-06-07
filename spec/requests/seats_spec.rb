@@ -5,7 +5,7 @@ RSpec.describe 'flights', type: :request do
         @user = User.create(name: 'John',
           lastname: 'Doe',
           username: 'ohn@uc.cl',
-          password_digest: '123456',
+          password: '123456',
           role: 2)
         @scl = Airport.create(city: 'Santiago', name: 'Arturo Merino Benitez International Airport')
         @lim = Airport.create(city: 'Lima', name: 'Jorge Chávez International Airport')
@@ -20,13 +20,22 @@ RSpec.describe 'flights', type: :request do
             tags 'Endpoints de Asientos'
             produces 'application/json'
             parameter name: :flight_id, in: :path, required: true
+            security [bearerAuth: []]
             response '200', 'Retorna el listado de asientos con éxito' do
-                let(:flight_id) { @flight.id } 
-                run_test!
+              let(:Authorization) { "Bearer #{AuthenticationTokenService.generate_token(@user.id)}" }
+              let(:flight_id) { @flight.id }
+              run_test!
             end
 
             response '404', 'Vuelo no encontrado' do
-              let(:flight_id) { 0 } 
+              let(:Authorization) { "Bearer #{AuthenticationTokenService.generate_token(@user.id)}" }
+              let(:flight_id) { 0 }
+              run_test!
+            end
+
+            response '401', 'Error en validación de Token' do
+              let(:Authorization) { 'Bearer ' }
+              let(:flight_id) { @flight.id }
               run_test!
             end
         end
@@ -36,6 +45,7 @@ RSpec.describe 'flights', type: :request do
             produces 'application/json'
             parameter name: :flight_id, in: :path, required: true
             consumes 'application/json'
+            security [bearerAuth: []]
             parameter name: :seat_params, in: :body, schema: {
               type: :object,
               properties: {
@@ -47,16 +57,25 @@ RSpec.describe 'flights', type: :request do
               },
               required: %w[user_id flight_id used passenger_name seat_code]
             }
-      
+
             response '201', 'Registra un nuevo asiento con éxito' do
+              let(:Authorization) { "Bearer #{AuthenticationTokenService.generate_token(@user.id)}" }
               let(:flight_id) { @flight.id } 
               let(:seat_params) { { user_id: @user.id, flight_id: @flight.id, used: true, passenger_name: @user.name, seat_code: "PILOT1"} }
               run_test!
             end
 
             response '404', 'Vuelo no encontrado' do
+              let(:Authorization) { "Bearer #{AuthenticationTokenService.generate_token(@user.id)}" }
               let(:seat_params) { { user_id: @user.id, flight_id: @flight.id, used: true, passenger_name: @user.name, seat_code: "PILOT1"} }
               let(:flight_id) { 0 } 
+              run_test!
+            end
+
+            response '401', 'Error en validación de Token' do
+              let(:Authorization) { 'Bearer ' }
+              let(:flight_id) { @flight.id } 
+              let(:seat_params) { { user_id: @user.id, flight_id: @flight.id, used: true, passenger_name: @user.name, seat_code: "PILOT1"} }
               run_test!
             end
         end
@@ -68,24 +87,34 @@ RSpec.describe 'flights', type: :request do
           produces 'application/json'
           parameter name: :flight_id, in: :path, required: true
           parameter name: :id, in: :path, required: true
+          security [bearerAuth: []]
           response '200', 'Retorna la información del asiento con éxito' do
+            let(:Authorization) { "Bearer #{AuthenticationTokenService.generate_token(@user.id)}" }
             let(:flight_id) { @flight.id }
             let(:id) { @flight.seats.first }
-              run_test!
+            run_test!
           end
 
           response '404', 'Vuelo no encontrado' do
+            let(:Authorization) { "Bearer #{AuthenticationTokenService.generate_token(@user.id)}" }
             let(:id) { @flight.seats.first }
             let(:flight_id) { 0 } 
             run_test!
           end
 
           response '404', 'Asiento no encontrado' do
+            let(:Authorization) { "Bearer #{AuthenticationTokenService.generate_token(@user.id)}" }
             let(:flight_id) { @flight.id } 
             let(:id) { 0 }
+            run_test!
+          end
+
+          response '401', 'Error en validación de Token' do
+            let(:Authorization) { 'Bearer ' }
+            let(:flight_id) { @flight.id }
+            let(:id) { @flight.seats.first }
             run_test!
           end
       end
     end
 end
-    
