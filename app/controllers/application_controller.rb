@@ -1,6 +1,5 @@
 class ApplicationController < ActionController::API
   include ActionController::HttpAuthentication::Token
-  before_action :authenticate_user
 
   def not_found
     render json: { error: 'not_found' }
