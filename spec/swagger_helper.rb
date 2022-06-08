@@ -24,6 +24,9 @@ RSpec.configure do |config|
       paths: {},
       servers: [
         {
+          url: 'https://easy-flight-api.herokuapp.com/',
+        },
+        {
           url: 'http://{otherHost}',
           variables: {
             otherHost: {
