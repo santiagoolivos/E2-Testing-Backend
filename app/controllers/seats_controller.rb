@@ -39,8 +39,11 @@ class SeatsController < ApplicationController
     render json: { error: 'No se ha encontrado el vuelo' }, status: :not_found if @flight.blank?
     return unless @flight.present?
 
+    render json: { error: 'No se ha encontrado el asiento / no pertenece al vuelo' }, status: :not_found if @seat.blank?
+    return unless @seat.present?
+
     if @seat.update(seat_params)
-      render json: @seat
+      render json: @seat, status: :accepted
     else
       render json: @seat.errors, status: :unprocessable_entity
     end
