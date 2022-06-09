@@ -1,3 +1,6 @@
+# frozen_string_literal: true
+
+# airport controller
 class AirportsController < ApplicationController
   before_action :set_airport, only: %i[show update destroy]
 
@@ -50,7 +53,7 @@ class AirportsController < ApplicationController
   # Use callbacks to share common setup or constraints between actions.
   def set_airport
     @airport = Airport.find(params[:id])
-  rescue ActiveRecord::RecordNotFound => e
+  rescue ActiveRecord::RecordNotFound
     @airport = nil
   end
 

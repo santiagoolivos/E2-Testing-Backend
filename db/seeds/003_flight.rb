@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 Flight.find_or_create_by(code: 'SCL-LIM',
                          departure: Airport.find_by(city: 'Santiago'),
                          arrival: Airport.find_by(city: 'Lima'),

@@ -1,3 +1,6 @@
+# frozen_string_literal: true
+
+# seats_controller.rb
 class SeatsController < ApplicationController
   before_action :set_flight, only: %i[index show create update destroy]
   before_action :set_seat, only: %i[show update destroy]
@@ -39,8 +42,11 @@ class SeatsController < ApplicationController
     render json: { error: 'No se ha encontrado el vuelo' }, status: :not_found if @flight.blank?
     return unless @flight.present?
 
+    render json: { error: 'No se ha encontrado el asiento / no pertenece al vuelo' }, status: :not_found if @seat.blank?
+    return unless @seat.present?
+
     if @seat.update(seat_params)
-      render json: @seat
+      render json: @seat, status: :accepted
     else
       render json: @seat.errors, status: :unprocessable_entity
     end
@@ -62,7 +68,7 @@ class SeatsController < ApplicationController
   # Use callbacks to share common setup or constraints between actions.
   def set_seat
     @seat = Seat.find(params[:id])
-  rescue ActiveRecord::RecordNotFound => e
+  rescue ActiveRecord::RecordNotFound
     @seat = nil
   end
 
@@ -73,7 +79,7 @@ class SeatsController < ApplicationController
 
   def set_flight
     @flight = Flight.find(params[:flight_id])
-  rescue ActiveRecord::RecordNotFound => e
+  rescue ActiveRecord::RecordNotFound
     @flight = nil
   end
 end
