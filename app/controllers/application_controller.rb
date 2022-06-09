@@ -1,3 +1,6 @@
+# frozen_string_literal: true
+
+# application_controller.rb
 class ApplicationController < ActionController::API
   include ActionController::HttpAuthentication::Token
   before_action :authenticate_user

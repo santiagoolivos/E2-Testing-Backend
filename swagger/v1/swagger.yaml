@@ -258,29 +258,49 @@ paths:
               type: object
               properties:
                 user_id:
-                  type: string
-                  example: SCL-LIM
+                  type: integer
+                  example: 2
                 flight_id:
-                  type: string
-                  example: '2020-01-01'
+                  type: integer
+                  example: 2
                 used:
                   type: string
-                  example: 1
+                  example: true
                 passenger_name:
                   type: string
-                  example: 2
+                  example: Raimundo
                 seat_code:
                   type: strings
-                  example: 2
+                  example: A1
               required:
               - user_id
               - flight_id
               - used
               - passenger_name
               - seat_code
-  "/flights/{flight_id}/seats/{id}":
+  "/flights/{flight_id}/seats/{id}/":
     get:
       summary: Obtener un asiento del vuelo
+      tags:
+      - Endpoints de Asientos
+      parameters:
+      - name: id
+        in: path
+        required: true
+      - name: flight_id
+        in: path
+        required: true
+      security:
+      - bearerAuth: []
+      responses:
+        '200':
+          description: Retorna la información del asiento con éxito
+        '404':
+          description: Asiento no encontrado
+        '401':
+          description: Error en validación de Token
+    patch:
+      summary: Editar un asiento del vuelo
       tags:
       - Endpoints de Asientos
       parameters:
@@ -293,12 +313,33 @@ paths:
       security:
       - bearerAuth: []
       responses:
-        '200':
-          description: Retorna la información del asiento con éxito
+        '202':
+          description: Registra un nuevo asiento con éxito
         '404':
           description: Asiento no encontrado
         '401':
           description: Error en validación de Token
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                user_id:
+                  type: integer
+                  example: 2
+                flight_id:
+                  type: integer
+                  example: 2
+                used:
+                  type: boolean
+                  example: true
+                passenger_name:
+                  type: string
+                  example: Raimundo
+                seat_code:
+                  type: strings
+                  example: A1
   "/users":
     get:
       summary: Obtener los usuarios

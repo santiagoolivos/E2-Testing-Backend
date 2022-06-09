@@ -1,3 +1,6 @@
+# frozen_string_literal: true
+
+# user controller
 class UsersController < ApplicationController
   before_action :set_user, only: %i[show update destroy]
   skip_before_action :authenticate_user, only: %i[create]
@@ -48,7 +51,7 @@ class UsersController < ApplicationController
   # Use callbacks to share common setup or constraints between actions.
   def set_user
     @user = User.find(params[:id])
-  rescue ActiveRecord::RecordNotFound => e
+  rescue ActiveRecord::RecordNotFound
     @user = nil
   end
 
