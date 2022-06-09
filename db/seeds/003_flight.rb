@@ -15,6 +15,7 @@ Flight.find_or_create_by(code: 'CHG-HST',
                          arrival: Airport.find_by(city: 'Houston'),
                          date: '2020-01-02')
 Flight.find_or_create_by(code: 'SCL-MIO',
-                         departure: Airport.find_by(city: 'Santiago'),
+                         departure: Airport.find_by(city: 'San Francisco'),
                          arrival: Airport.find_by(city: 'Miami'),
-                         date: '2020-01-02')
+                         date: '2022-07-07')
+
