@@ -1,3 +1,6 @@
+# frozen_string_literal: true
+
+# flight_controller.rb
 class FlightsController < ApplicationController
   before_action :set_flight, only: %i[show update destroy]
 
@@ -62,7 +65,7 @@ class FlightsController < ApplicationController
   # Use callbacks to share common setup or constraints between actions.
   def set_flight
     @flight = Flight.find(params[:id])
-  rescue ActiveRecord::RecordNotFound => e
+  rescue ActiveRecord::RecordNotFound
     @flight = nil
   end
 

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 Airport.find_or_create_by(city: 'San Francisco', name: 'San Francisco International Airport')
 Airport.find_or_create_by(city: 'New York', name: 'John F. Kennedy International Airport')
 Airport.find_or_create_by(city: 'Los Angeles', name: 'Los Angeles International Airport')
@@ -18,4 +20,3 @@ Airport.find_or_create_by(city: 'Melbourne', name: 'Melbourne International Airp
 Airport.find_or_create_by(city: 'Perth', name: 'Perth International Airport')
 Airport.find_or_create_by(city: 'Canberra', name: 'Canberra International Airport')
 Airport.find_or_create_by(city: 'Brisbane', name: 'Brisbane International Airport')
-

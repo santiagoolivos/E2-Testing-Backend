@@ -24,7 +24,7 @@ RSpec.configure do |config|
       paths: {},
       servers: [
         {
-          url: 'https://easy-flight-api.herokuapp.com/',
+          url: 'https://easy-flight-api.herokuapp.com/'
         },
         {
           url: 'http://{otherHost}',
@@ -41,10 +41,10 @@ RSpec.configure do |config|
             type: :http,
             scheme: :bearer,
             bearerFormat: :JWT,
-            name: "Authorization"
+            name: 'Authorization'
           }
         }
-      },
+      }
     }
   }
 
