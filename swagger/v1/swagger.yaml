@@ -216,6 +216,23 @@ paths:
                 departure_id:
                   type: string
                   example: 2
+    delete:
+      summary: Eliminar un vuelo
+      tags:
+      - Endpoints de Vuelos
+      security:
+      - bearerAuth: []
+      parameters:
+      - name: id
+        in: path
+        required: true
+      responses:
+        '202':
+          description: Elimina el vuelo con éxito
+        '404':
+          description: Vuelo no encontrado
+        '401':
+          description: Error en validación de Token
   "/flights/{flight_id}/seats":
     get:
       summary: Obtener los asientos del asiento

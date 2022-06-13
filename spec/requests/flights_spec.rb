@@ -130,5 +130,31 @@ RSpec.describe 'flights', type: :request do
         run_test!
       end
     end
+
+    delete 'Eliminar un vuelo' do
+      tags 'Endpoints de Vuelos'
+      produces 'application/json'
+      consumes 'application/json'
+      security [bearerAuth: []]
+      parameter name: :id, in: :path, required: true
+
+      response '202', 'Elimina el vuelo con éxito' do
+        let(:Authorization) { "Bearer #{AuthenticationTokenService.generate_token(@user.id)}" }
+        let(:id) { @flight.id }
+        run_test!
+      end
+
+      response '404', 'Vuelo no encontrado' do
+        let(:Authorization) { "Bearer #{AuthenticationTokenService.generate_token(@user.id)}" }
+        let(:id) { 0 }
+        run_test!
+      end
+
+      response '401', 'Error en validación de Token' do
+        let(:Authorization) { 'Bearer ' }
+        let(:id) { @flight.id }
+        run_test!
+      end
+    end
   end
 end

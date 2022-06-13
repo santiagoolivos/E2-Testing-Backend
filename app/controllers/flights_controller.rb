@@ -58,6 +58,7 @@ class FlightsController < ApplicationController
     return unless @flight.present?
 
     @flight.destroy
+    render  json: { message: 'Vuelo eliminado' }, status: :accepted
   end
 
   private
