@@ -69,4 +69,5 @@ group :test do
   gem 'webdrivers'
   gem 'capybara-bootstrap-datepicker'
   gem 'database_cleaner-active_record'
+  gem 'database_cleaner'
 end

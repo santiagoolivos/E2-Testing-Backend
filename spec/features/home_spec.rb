@@ -1,3 +1,4 @@
+require "database_cleaner/active_record"
 
 
 
@@ -15,7 +16,7 @@ describe "Registrarse", :js => true, :type => :feature do
         click_on 'Registrarse'
         fill_in 'Nombre', with: 'Batman'
         fill_in 'Apellido', with: 'Alvarez'
-        fill_in 'Email', with: 'Batman@gotica.com'
+        fill_in 'Email', with: 'Batman2@gotica.com'
         fill_in 'Contraseña', with: '1234'
         click_on 'Registrarse'
         # page.save_screenshot
@@ -27,11 +28,11 @@ end
 describe "Log In", :js => true, :type => :feature do
     it 'registrarse' do
         visit('http://localhost:3001/')
-        fill_in 'Email', with: 'Batman@gotica.com'
+        fill_in 'Email', with: 'Batman2@gotica.com'
         fill_in 'Contraseña', with: '1234'
         click_on 'Iniciar sesión'
         # page.save_screenshot
-        expect(page).to have_content("Mis Vuelos")
+        expect(page).to have_content("Reservas")
         puts 'Logeado'
     end
 end
@@ -39,7 +40,7 @@ end
 describe "Happy Path Buscar Vuelo", :js => true, :type => :feature do
     it 'buscar vuelo' do
         visit('http://localhost:3001/')
-        fill_in 'Email', with: 'Batman@gotica.com'
+        fill_in 'Email', with: 'Batman2@gotica.com'
         fill_in 'Contraseña', with: '1234'
         click_on 'Iniciar sesión'
         select "Los Angeles", from: "origen"
@@ -54,7 +55,7 @@ end
 describe "Happy Path Reservar Vuelo", :js => true, :type => :feature do
     it 'buscar vuelo' do
         visit('http://localhost:3001/')
-        fill_in 'Email', with: 'Batman@gotica.com'
+        fill_in 'Email', with: 'Batman2@gotica.com'
         fill_in 'Contraseña', with: '1234'
         click_on 'Iniciar sesión'
         select "Los Angeles", from: "origen"
@@ -62,10 +63,10 @@ describe "Happy Path Reservar Vuelo", :js => true, :type => :feature do
         fill_in 'fecha', with: '07/09/2022'
         click_on 'Buscar'
         click_on 'Seleccionar asientos'
-        find('#A10').click
+        find('#A3').click
         fill_in 'nombre_pasajero', with: 'Tomás'
         click_on 'Agregar Asientos'
-        expect(page).to have_content("A10")
+        expect(page).to have_content("A3")
     end
 end
   
