@@ -1,24 +1,56 @@
 # README
+* Deployed app in heroku
+```console
+https://easy-flight-api.herokuapp.com/
+```
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
-
-Things you may want to cover:
+* Deployed app in heroku (documentation)
+```console
+https://easy-flight-api.herokuapp.com/api-docs/index.html
+```
 
 * Ruby version
+```console
+ruby '3.1.2'
+```
 
-* System dependencies
+* Configuration (exec)
+```console
+bundle install
+```
 
-* Configuration
+* Required File
+```console
+.env
+...................
+PSQL_USER=
+PSQL_PASSWORD=
+JWT_SECRET=Secret
+```
 
 * Database creation
+```console
+rails db:create
+```
 
 * Database initialization
+```console
+rails db:migrate
+rails db:seed
+```
 
-* How to run the test suite
+* How to run the test
+```console
+rspec
+```
 
-* Services (job queues, cache servers, search engines, etc.)
+* How to run specific the test (* can be any file)
+```console
+rspec spec/requests/*
+```
 
-* Deployment instructions
+* Deployment instructions (required heroku login)
+```console
+git push heroku main
+```
 
-* ...
