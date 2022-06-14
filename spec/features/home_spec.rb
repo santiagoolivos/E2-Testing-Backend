@@ -63,6 +63,7 @@ describe "Happy Path Reservar Vuelo", :js => true, :type => :feature do
         fill_in 'fecha', with: '07/09/2022'
         click_on 'Buscar'
         click_on 'Seleccionar asientos'
+        print("Si este test falla es posible que sea debido a que el asiento ya está seleccionado. Por favor intentar con un asiento disponible.")
         find('#A3').click
         fill_in 'nombre_pasajero', with: 'Tomás'
         click_on 'Agregar Asientos'
