@@ -14,6 +14,11 @@ https://easy-flight-api.herokuapp.com/api-docs/index.html
 ruby '3.1.2'
 ```
 
+* Rails version
+```console
+gem 'rails', '~> 7.0.3'
+```
+
 * Configuration (exec)
 ```console
 bundle install
@@ -40,6 +45,8 @@ rails db:seed
 ```
 
 * How to run the test
+
+*Database cleaner is not implemented, Capybara may fail the seat test when you repeat it.
 ```console
 rspec
 ```
