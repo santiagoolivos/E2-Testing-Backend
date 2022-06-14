@@ -15,7 +15,6 @@ Flight.find_or_create_by(code: 'NY-LIM',
 Flight.find_or_create_by(code: 'CHG-HST',
                          departure: Airport.find_by(city: 'Chicago'),
                          arrival: Airport.find_by(city: 'Houston'),
-
                          date: '2022-07-02')
 Flight.find_or_create_by(code: 'LA-CHG',
                          departure: Airport.find_by(city: 'Los Angeles'),

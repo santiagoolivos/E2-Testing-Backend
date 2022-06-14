@@ -89,11 +89,10 @@ RSpec.describe 'flights', type: :request do
       response '401', 'Error en validación de Token' do
         let(:Authorization) { 'Bearer ' }
         let(:id) { @flight.id }
-
         run_test!
       end
     end
-  end
+
     patch 'Modificar un vuelo' do
       tags 'Endpoints de Vuelos'
       produces 'application/json'
@@ -126,9 +125,7 @@ RSpec.describe 'flights', type: :request do
 
       response '401', 'Error en validación de Token' do
         let(:Authorization) { 'Bearer ' }
-
         let(:flight_params) { { code: 'Lim' } }
-
         let(:id) { @flight.id }
         run_test!
       end
