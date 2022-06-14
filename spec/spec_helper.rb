@@ -15,27 +15,7 @@
 # it.
 #
 # See https://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
-require 'capybara'
-require "database_cleaner"
-Capybara.javascript_driver = :selenium
-Capybara.default_driver = :selenium
-  Capybara.register_driver :selenium do |app|
-    options = {
-        :js_errors => false,
-            }
-    Capybara::Selenium::Driver.new(app, :browser => :firefox)
-  end
-
 RSpec.configure do |config|
-
-  
-  config.before(:each) do
-    DatabaseCleaner.strategy = :truncation
-    DatabaseCleaner.start
-  end
-  config.after(:each) do
-    DatabaseCleaner.clean
-  end
   # rspec-expectations config goes here. You can use an alternate
   # assertion/expectation library such as wrong or the stdlib/minitest
   # assertions if you prefer.
